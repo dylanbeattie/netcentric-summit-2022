@@ -1,11 +1,17 @@
-import * as Greeter from './greeter.js';
+import * as Patterns from './modules/patterns.js';
 
-let greeter = new Greeter.Greeter('Netcentric');
-let greeting = greeter.greet();
+let myCanvas = document.getElementById('my-canvas');
 
-document.querySelector('#greeting').innerHTML = `
-  <h1>${greeting}</h1>
-  <p>(If you can read this, JS modules are working)</p>
-  <img src="favicon.svg" style="width: 200px; height: 200px;" />
-  <p><small>${new Date()}</small></p>
-`;
+function draw() {
+    Patterns.Gradiance(myCanvas);
+    // console.log(window.location.hash);
+    // switch (window.location.hash) {
+    //     case "#mondrian": DrawMondrian(myCanvas); break;
+    //     case "#lasers": Patterns.Lasers(myCanvas); break;
+    //     case "#supernova": Patterns.Supernova(myCanvas); break;
+    //     case "#gradiance": Patterns.Gradiance(myCanvas); break;
+    //     default: Patterns.Chessboard(myCanvas); break;
+    // }
+}
+
+draw();
