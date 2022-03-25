@@ -12,7 +12,7 @@ function paint(x, y, width, height, color) {
 }
 
 export function render() {
-    let scene = ExampleScenes.ColoredSpheresWithLights();
+    let scene = ExampleScenes.AssortedShapes();
     tracer.trace(scene, paint);
 }
 
