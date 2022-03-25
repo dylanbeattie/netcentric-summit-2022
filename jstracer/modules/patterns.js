@@ -7,6 +7,16 @@ function renderCanvas(canvas, getColorAtPixel) {
         }
     }
 }
+
+export function DylanLaserPattern(canvas) {
+    renderCanvas(canvas, (x, y) => {
+        let r = 255 * Math.sin(200 - x / 20) + 255 * Math.cos(150 - y / 20)
+        let g = 50 * Math.sin(200 - x / 40) + (5 * Math.cos(150 - y / 10))
+        let b = 255 * Math.cos(150 - y / 20)
+        if (x % 20 == 0 || y % 20 == 0) g = 255;
+        return `rgb(${r},${g},${b})`
+    });
+}
 export function Chessboard(canvas) {
     let color1 = "#f00";
     let color2 = "#00f";

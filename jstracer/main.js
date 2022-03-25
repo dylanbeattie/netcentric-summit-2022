@@ -3,7 +3,7 @@ import * as Patterns from './modules/patterns.js';
 let myCanvas = document.getElementById('my-canvas');
 
 function draw() {
-    Patterns.Gradiance(myCanvas);
+    Patterns.DylanLaserPattern(myCanvas);
     // console.log(window.location.hash);
     // switch (window.location.hash) {
     //     case "#mondrian": DrawMondrian(myCanvas); break;
