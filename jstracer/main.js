@@ -12,7 +12,7 @@ function paint(x, y, width, height, color) {
 }
 
 export function render() {
-    let scene = ExampleScenes.EmptySky();
+    let scene = ExampleScenes.ColoredSpheres();
     tracer.trace(scene, paint);
 }
 
