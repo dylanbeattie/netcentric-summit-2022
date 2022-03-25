@@ -1,17 +1,19 @@
-import * as Patterns from './modules/patterns.js';
+import { Tracer } from './modules/tracer.js';
+import * as ExampleScenes from './scenes/examples.js';
 
-let myCanvas = document.getElementById('my-canvas');
+let canvas = document.getElementById('my-canvas');
+let ctx = canvas.getContext('2d');
+let tracer = new Tracer(canvas.width, canvas.height);
 
-function draw() {
-    Patterns.DylanLaserPattern(myCanvas);
-    // console.log(window.location.hash);
-    // switch (window.location.hash) {
-    //     case "#mondrian": DrawMondrian(myCanvas); break;
-    //     case "#lasers": Patterns.Lasers(myCanvas); break;
-    //     case "#supernova": Patterns.Supernova(myCanvas); break;
-    //     case "#gradiance": Patterns.Gradiance(myCanvas); break;
-    //     default: Patterns.Chessboard(myCanvas); break;
-    // }
+function paint(x, y, width, height, color) {
+    var rgb = `rgb(${color.r},${color.g},${color.b})`;
+    ctx.fillStyle = rgb;
+    ctx.fillRect(x, y, width, height);
 }
 
-draw();
+export function render() {
+    let scene = ExampleScenes.EmptySky();
+    tracer.trace(scene, paint);
+}
+
+render();
