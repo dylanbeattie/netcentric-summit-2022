@@ -1,7 +1,5 @@
-import { THRESHOLD } from './settings.js';
 import { Ray } from './ray.js';
-// How much color do we see from areas that aren't illuminated by any light source?
-const AMBIENT = 0.18;
+import { THRESHOLD } from './settings.js';
 
 export class Shape {
 
@@ -17,10 +15,16 @@ export class Shape {
         return shortestDistance;
     }
 
-    getColorAt = (point, scene) => {
+    reflect = (incident, normal) => {
+        let inverse = incident.invert();
+        return inverse.add(normal.scale(normal.dot(inverse)).add(incident).scale(2));
+    }
+
+    getColorAt = (point, ray, scene) => {
         let materialColor = this.texture.getColorAt(point);
-        let colorToReturn = materialColor.scale(AMBIENT);
+        let colorToReturn = materialColor.scale(this.texture.finish.ambient);
         let normal = this.getNormalAt(point);
+        let reflex = this.reflect(ray.direction, normal);
         let otherShapes = scene.shapes.filter(s => s != this);
         scene.lights.forEach(light => {
             let lightDirection = light.position.add(point.invert());
@@ -34,6 +38,12 @@ export class Shape {
                 if (!shadow) {
                     let illumination = materialColor.multiply(light.color).scale(brightness);
                     colorToReturn = colorToReturn.add(illumination);
+                    let specular = reflex.dot(lightDirection.normalize());
+                    if (specular > 0) {
+                        let exponent = 16 * this.texture.finish.specular * this.texture.finish.specular;
+                        specular = Math.pow(specular, exponent);
+                        colorToReturn = colorToReturn.add(light.color.scale(this.texture.finish.specular * specular));
+                    }
                 }
             }
         });
